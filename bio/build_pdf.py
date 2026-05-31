@@ -135,7 +135,18 @@ for i, (lbl, vals) in enumerate(cells):
     for v in vals:
         p1.text(cx, yy, v, 10.5, NAVY, True)
         yy -= 12
-y = box_top - box_h - 24
+y = box_top - box_h - 16
+
+# pull-quote bar (verbatim coverage of the BRW Fast 100 2012 list)
+q1 = "\"First place on the Fast 100 list went to telecommunications company Time Telecom,"
+q2 = "with a revenue of $51.13m and growth of 375.21 percent.\""
+qh = 42
+p1.rect(ML, y - qh, 3.5, qh, ORANGE)            # accent bar
+p1.rect(ML + 3.5, y - qh, CW - 3.5, qh, BOX)
+p1.text(ML + 14, y - 16, q1, 10, NAVY, True)
+p1.text(ML + 14, y - 29, q2, 10, NAVY, True)
+p1.text(ML + 14, y - 38, "Coverage of the BRW Fast 100, 2012", 7.5, GREY, False, 0.3)
+y = y - qh - 20
 
 def section(p, y, title, body):
     p.text(ML, y, title, 11.5, NAVY, True)
@@ -193,7 +204,7 @@ y -= 8
 
 sources = [
  ("Narayan Rathi - LinkedIn 'Honors & awards' (NAMES YOU)", "Lists 'BRW Fast Starters - 1st place' and 'BRW Fast 100'. This is the artifact that credits you personally - screenshot this section.  linkedin.com/in/narayanrathi"),
- ("BRW Fast 100 2012 - No. 1 (company)", "BRW lists credit the company, not individuals: Time Telecom first place, $51.13M revenue, 375.21% growth (3 yrs to 2011-12). AFR / BRW Fast 100 2012 archives; franchisebusiness.com.au coverage."),
+ ("BRW Fast 100 2012 - No. 1 (PUBLISHED ARTICLE)", "Franchise Business, 'Which franchises made the Fast 100 list?' quotes verbatim: \"First place on the Fast 100 list went to telecommunications company Time Telecom, with a revenue of $51.13m and growth of 375.21 percent.\"  franchisebusiness.com.au/which-franchises-made-the-fast-100-list/  (mirror: australianfranchises.com.au)"),
  ("M2 acquisition of Time Telecom", "The Register, 28 Feb 2012 - 'M2 Telecoms buys some Time' (Southern Cross Telco; ~A$18.5M; ~30,000 customers).  theregister.com/2012/02/28/m2_buys_time/"),
  ("M2 Group (ASX: MTU)", "Company background, acquisitions and 2016 Vocus merger.  en.wikipedia.org/wiki/M2_Group"),
  ("Deloitte Technology Fast 50 Australia", "Program overview - CONFIRM exact year & rank before publishing a specific placement.  deloitte.com/au/en/Industries/tmt/about/technology-fast-50.html"),

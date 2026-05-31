@@ -14,7 +14,6 @@ HELV = {
  98:556,99:500,100:556,101:556,102:278,103:556,104:556,105:222,106:222,107:500,
  108:222,109:833,110:556,111:556,112:556,113:556,114:333,115:500,116:278,117:556,
  118:500,119:722,120:500,121:500,122:500,123:334,124:260,125:334,126:584}
-# Helvetica-Bold widths
 HELVB = {
  32:278,33:333,34:474,35:556,36:556,37:889,38:722,39:238,40:333,41:333,42:389,
  43:584,44:278,45:333,46:278,47:278,48:556,49:556,50:556,51:556,52:556,53:556,
@@ -47,7 +46,6 @@ def wrap(s, size, maxw, bold=False):
         lines.append(cur)
     return lines
 
-# RGB helpers
 ORANGE = (0.784, 0.314, 0.118)
 NAVY   = (0.122, 0.165, 0.267)
 GREY   = (0.29, 0.33, 0.39)
@@ -57,7 +55,6 @@ BOXB   = (0.925, 0.902, 0.871)
 LINE   = (0.886, 0.898, 0.918)
 NOTEBG = (0.984, 0.965, 0.925)
 NOTEBD = (0.941, 0.886, 0.769)
-BLUE   = (0.141, 0.337, 0.651)
 
 PW, PH = 595.28, 841.89
 ML, MR = 50, 50
@@ -85,6 +82,8 @@ class Page:
         if spacing:
             self.ops.append("0 Tc")
         self.ops.append("ET")
+    def rtext(self, xr, y, s, size, rgb, bold=False):
+        self.text(xr - tw(s, size, bold), y, s, size, rgb, bold)
     def para(self, x, y, s, size, rgb, maxw, lead, bold=False):
         for ln in wrap(s, size, maxw, bold):
             self.text(x, y, ln, size, rgb, bold)
@@ -93,170 +92,156 @@ class Page:
     def stream(self):
         return "\n".join(self.ops).encode("latin-1", "replace")
 
-# ---------------- Build page 1 ----------------
+# ---------------- Page 1 : client-facing ----------------
 p1 = Page()
-y = PH - 58
+y = PH - 56
 p1.text(ML, y, "FOUNDER CREDIBILITY  .  AUTOMATE ACCELERATOR", 8.5, ORANGE, True, 1.2)
-y -= 30
-p1.text(ML, y, "Narayan Rathi", 30, NAVY, True)
-y -= 20
+y -= 29
+p1.text(ML, y, "Narayan Rathi", 29, NAVY, True)
+y -= 19
 p1.text(ML, y, "Co-founder & Chief Executive Officer, Automate Accelerator   |   Melbourne, Australia", 10.5, GREY)
-y -= 14
+y -= 13
 p1.line(ML, y, ML + CW, 2, ORANGE)
-y -= 20
+y -= 18
 
-lead = ("Before founding Automate Accelerator, Narayan was part of the leadership team that built "
-        "Time Telecom into the fastest-growing company in Australia - ranked No. 1 on the 2012 BRW "
-        "Fast 100 - and then sold the business to ASX-listed M2 Telecommunications Group. The same "
-        "operator discipline now sits behind Automate Accelerator's growth partnerships.")
-y = p1.para(ML, y, lead, 11, DARK, CW, 16)
-y -= 10
+lead = ("Before founding Automate Accelerator, Narayan spent a decade building one of Australia's "
+        "fastest-growing telecommunications groups. Time Telecom was ranked No. 1 on the 2012 BRW "
+        "Fast 100 and acquired by ASX-listed M2 Group; its successor, Smart Business Telecom, kept the "
+        "run going with back-to-back BRW Fast Starters and Deloitte Technology Fast 50 placings.")
+y = p1.para(ML, y, lead, 10.5, DARK, CW, 15)
+y -= 8
 
-# stat box
-box_h = 96
-box_top = y
-p1.rect(ML, box_top - box_h, CW, box_h, BOX)
-p1.col(BOXB, False)
-p1.ops.append(f"0.8 w {ML:.2f} {box_top-box_h:.2f} {CW:.2f} {box_h:.2f} re S")
-colw = CW / 3.0
-cells = [
- ("BRW FAST 100 (2012)", ["Ranked No. 1 - Australia's", "fastest-growing company"]),
- ("3-YEAR REVENUE GROWTH", ["375.21%", "(to FY2011-12)"]),
- ("REVENUE AT RANKING", ["$51.13 million"]),
- ("EXIT", ["Acquired by ASX-listed", "M2 Group (2012)"]),
- ("CUSTOMERS AT ACQUISITION", ["~30,000 business &", "residential"]),
- ("FURTHER RECOGNITION", ["Deloitte Technology", "Fast 50 Australia"]),
-]
-for i, (lbl, vals) in enumerate(cells):
-    cx = ML + 12 + (i % 3) * colw
-    cy = box_top - 20 - (i // 3) * (box_h / 2.0)
-    p1.text(cx, cy, lbl, 7.5, ORANGE, True, 0.3)
-    yy = cy - 13
-    for v in vals:
-        p1.text(cx, yy, v, 10.5, NAVY, True)
-        yy -= 12
-y = box_top - box_h - 16
-
-# pull-quote bar (verbatim coverage of the BRW Fast 100 2012 list)
+# pull-quote
 q1 = "\"First place on the Fast 100 list went to telecommunications company Time Telecom,"
 q2 = "with a revenue of $51.13m and growth of 375.21 percent.\""
-qh = 42
-p1.rect(ML, y - qh, 3.5, qh, ORANGE)            # accent bar
+qh = 40
+p1.rect(ML, y - qh, 3.5, qh, ORANGE)
 p1.rect(ML + 3.5, y - qh, CW - 3.5, qh, BOX)
-p1.text(ML + 14, y - 16, q1, 10, NAVY, True)
-p1.text(ML + 14, y - 29, q2, 10, NAVY, True)
-p1.text(ML + 14, y - 38, "Coverage of the BRW Fast 100, 2012", 7.5, GREY, False, 0.3)
-y = y - qh - 20
+p1.text(ML + 14, y - 15, q1, 9.5, NAVY, True)
+p1.text(ML + 14, y - 27, q2, 9.5, NAVY, True)
+p1.text(ML + 14, y - 36, "Coverage of the BRW Fast 100, 2012", 7.5, GREY, False, 0.3)
+y = y - qh - 16
+
+# key numbers (single row)
+kh = 46
+p1.rect(ML, y - kh, CW, kh, BOX)
+p1.col(BOXB, False); p1.ops.append(f"0.8 w {ML:.2f} {y-kh:.2f} {CW:.2f} {kh:.2f} re S")
+kn = [("3-YEAR REVENUE GROWTH", "375.21%"),
+      ("REVENUE AT BRW No. 1", "$51.13 million"),
+      ("CUSTOMERS ACQUIRED BY M2", "~30,000")]
+cw3 = CW / 3.0
+for i, (lbl, val) in enumerate(kn):
+    cx = ML + 14 + i * cw3
+    p1.text(cx, y - 17, lbl, 7.5, ORANGE, True, 0.3)
+    p1.text(cx, y - 33, val, 13, NAVY, True)
+y = y - kh - 22
+
+# recognition timeline
+p1.text(ML, y, "Recognition track record", 11.5, NAVY, True)
+y -= 5
+p1.line(ML, y, ML + CW, 0.8, LINE); y -= 16
+rows = [
+ ("2012", "BRW Fast 100 - ranked No. 1 in Australia", "Time Telecom"),
+ ("2012", "Acquired by ASX-listed M2 Group (ASX: MTU)", "Time Telecom"),
+ ("2014", "BRW Fast Starters - 8th", "Smart Business Telecom"),
+ ("2015", "BRW Fast Starters - 4th", "Smart Business Telecom"),
+ ("2015", "Deloitte Technology Fast 50 Australia - 47th (120% growth)", "Smart Business Telecom"),
+]
+for yr, head, ent in rows:
+    p1.text(ML, y, yr, 10, ORANGE, True)
+    p1.text(ML + 40, y, head, 10, NAVY, True)
+    p1.rtext(ML + CW, y, ent, 9, GREY, False)
+    y -= 8
+    p1.line(ML, y, ML + CW, 0.5, LINE)
+    y -= 9
+y -= 6
 
 def section(p, y, title, body):
     p.text(ML, y, title, 11.5, NAVY, True)
     y -= 5
     p.line(ML, y, ML + CW, 0.8, LINE)
-    y -= 16
-    y = p.para(ML, y, body, 10.5, DARK, CW, 15)
-    return y - 10
+    y -= 15
+    y = p.para(ML, y, body, 10.5, DARK, CW, 14.5)
+    return y - 9
 
-y = section(p1, y, "The Time Telecom story",
-    "Time Telecom was a Melbourne-based telecommunications provider serving small and medium business "
-    "and residential customers Australia-wide. Through sustained, disciplined growth it reached $51.13 "
-    "million in revenue on the back of 375.21% revenue growth over three years - enough to top the 2012 "
-    "BRW Fast 100, the Australian Financial Review / BRW ranking of the country's fastest-growing "
-    "established companies. In 2012 the business was acquired by M2 Telecommunications Group (ASX: MTU) "
-    "- then one of Australia's largest challenger telcos - through its subsidiary Southern Cross Telco, "
-    "in a deal reported at around A$18.5 million, bringing across roughly 30,000 customers. M2 later "
-    "merged with Vocus in 2016.")
-
-y = section(p1, y, "Continuing the growth track record",
-    "Narayan stayed in the high-growth telco sector, where the group also earned recognition among "
-    "Australia's fastest-growing technology companies in the Deloitte Technology Fast 50, and the "
-    "follow-on venture Smart Business Telecom placed 4th on the BRW Fast Starters list in 2015. In 2021 "
-    "he founded Automate Accelerator, applying the same buyer-clarity and operating discipline to help "
-    "Australian B2B companies build serious outbound growth channels.")
+y = section(p1, y, "The story",
+    "Time Telecom was a Melbourne-based provider serving ~30,000 small-business and residential "
+    "customers Australia-wide. Disciplined growth - 375.21% over three years to $51.13 million in "
+    "revenue - took it to the top of the 2012 BRW Fast 100 (the AFR / BRW ranking of the country's "
+    "fastest-growing established companies). In 2012 it was acquired by M2 Telecommunications Group "
+    "(ASX: MTU) via subsidiary Southern Cross Telco for a reported A$18.5 million. The founding team "
+    "then built Smart Business Telecom, doubling revenue from ~$22M to ~$48M in three years and earning "
+    "fresh BRW Fast Starters and Deloitte Technology Fast 50 recognition.")
 
 y = section(p1, y, "What he does today",
-    "Narayan is co-founder and CEO of Automate Accelerator, an Australian-owned B2B growth partner. AA "
+    "Narayan is co-founder and CEO of Automate Accelerator, an Australian-owned B2B growth partner that "
     "helps companies reach specific buyers through clear buyer definitions, checked decision-maker data "
-    "and human-led outreach - measured by real replies and conversations, not activity. He stays close "
-    "to strategy, offer positioning and the first version of every new client brief.")
+    "and human-led outreach - measured by real replies and conversations, not activity.")
 
-# footer
-fy = 64
+fy = 60
 p1.line(ML, fy + 10, ML + CW, 0.8, LINE)
 p1.text(ML, fy, "Automate Accelerator  .  Melbourne, Victoria  .  info@automateaccelerator.com", 8.5, GREY)
-p1.text(ML, fy - 11, "Figures relate to Time Telecom and are drawn from public sources (see reference sheet). Australian English; figures ex GST where applicable.", 8.0, GREY)
+p1.text(ML, fy - 11, "Figures relate to Time Telecom / Smart Business Telecom, from public sources (see reference sheet). Australian English; ex GST where applicable.", 7.5, GREY)
 
-# ---------------- Build page 2 (reference) ----------------
+# ---------------- Page 2 : reference sheet ----------------
 p2 = Page()
-y = PH - 58
+y = PH - 56
 p2.text(ML, y, "FOR YOUR REFERENCE - NOT FOR THE CLIENT", 8.5, ORANGE, True, 1.0)
-y -= 28
+y -= 27
 p2.text(ML, y, "Sources & screenshots to capture", 20, NAVY, True)
-y -= 12
-p2.line(ML, y, ML + CW, 2, ORANGE)
-y -= 18
+y -= 11
+p2.line(ML, y, ML + CW, 2, ORANGE); y -= 16
 y = p2.para(ML, y,
-    "Note: the BRW Fast 100 / Fast Starters lists credit the COMPANY (Time Telecom, later Smart Business "
-    "Telecom), not individuals - there is no standalone BRW article naming Narayan personally. The mention "
-    "that names you directly is your own LinkedIn 'Honors & awards' section (first row below). Outbound image "
-    "downloads are blocked in this environment, so below are the source links; open each, screenshot the "
-    "highlighted item and place it beside the matching claim.", 9.5, DARK, CW, 14)
-y -= 8
+    "BRW / Deloitte lists credit the COMPANY (Time Telecom, then Smart Business Telecom), not "
+    "individuals - there is no standalone article naming Narayan personally. The mention that names you "
+    "directly is your own LinkedIn 'Honors & awards' section (first row). Outbound image downloads are "
+    "blocked in this environment, so below are the source links; open each, screenshot the highlighted "
+    "item and place it beside the matching claim.", 9.5, DARK, CW, 13.5)
+y -= 7
 
 sources = [
- ("Narayan Rathi - LinkedIn 'Honors & awards' (NAMES YOU)", "Lists 'BRW Fast Starters - 1st place' and 'BRW Fast 100'. This is the artifact that credits you personally - screenshot this section.  linkedin.com/in/narayanrathi"),
- ("BRW Fast 100 2012 - No. 1 (PUBLISHED ARTICLE)", "Franchise Business, 'Which franchises made the Fast 100 list?' quotes verbatim: \"First place on the Fast 100 list went to telecommunications company Time Telecom, with a revenue of $51.13m and growth of 375.21 percent.\"  franchisebusiness.com.au/which-franchises-made-the-fast-100-list/  (mirror: australianfranchises.com.au)"),
- ("M2 acquisition of Time Telecom", "The Register, 28 Feb 2012 - 'M2 Telecoms buys some Time' (Southern Cross Telco; ~A$18.5M; ~30,000 customers).  theregister.com/2012/02/28/m2_buys_time/"),
- ("M2 Group (ASX: MTU)", "Company background, acquisitions and 2016 Vocus merger.  en.wikipedia.org/wiki/M2_Group"),
- ("Deloitte Technology Fast 50 Australia", "Program overview - CONFIRM exact year & rank before publishing a specific placement.  deloitte.com/au/en/Industries/tmt/about/technology-fast-50.html"),
- ("Smart Business Telecom - Fast Starters 4th (2015)", "Ex-Time Telecom group, moved from 8th to 4th.  forums.whirlpool.net.au/thread/1091483"),
- ("Time Telecom (company)", "au.linkedin.com/company/time-telecom"),
+ ("Narayan Rathi - LinkedIn 'Honors & awards' (NAMES YOU)", "Lists 'BRW Fast Starters - 1st place' and 'BRW Fast 100'. The artifact that credits you personally - screenshot it.  linkedin.com/in/narayanrathi"),
+ ("BRW Fast 100 2012 - No. 1 (PUBLISHED ARTICLE)", "Franchise Business, 'Which franchises made the Fast 100 list?' quotes verbatim: \"First place on the Fast 100 list went to telecommunications company Time Telecom, with a revenue of $51.13m and growth of 375.21 percent.\"  franchisebusiness.com.au/which-franchises-made-the-fast-100-list/"),
+ ("M2 acquisition of Time Telecom (2012)", "The Register, 28 Feb 2012, 'M2 Telecoms buys some Time' (Southern Cross Telco; ~A$18.5M; ~30,000 customers).  theregister.com/2012/02/28/m2_buys_time/ ; M2 Group: en.wikipedia.org/wiki/M2_Group"),
+ ("Smart Business Telecom - BRW Fast Starters (2014 & 2015)", "Ex-Time Telecom group; moved 8th (2014) to 4th (2015); revenue ~$22M to ~$48M in three years.  forums.whirlpool.net.au/thread/1091483"),
+ ("Smart Business Telecom - Deloitte Tech Fast 50 2015 (#47)", "Ranked 47th with 120% growth.  Deloitte Technology Fast 50 Winners 2015 (slideshare.net/DeloitteAustralia/deloitte-technology-fast-50-winners-2015)"),
+ ("Companies (LinkedIn)", "Time Telecom: au.linkedin.com/company/time-telecom ; Smart Business Telecom: crunchbase.com/organization/smart-business-telecom"),
 ]
 for title, desc in sources:
     p2.text(ML, y, title, 10, NAVY, True)
     y -= 13
     y = p2.para(ML + 4, y, desc, 9, GREY, CW - 4, 12)
-    y -= 6
+    y -= 5
     p2.line(ML, y + 2, ML + CW, 0.6, LINE)
-    y -= 12
+    y -= 11
 
-# note box
 note_lines = [
  ("Verification notes - please confirm before sending:", True),
- ("1. Your exact role/title at Time Telecom (public records list 'Senior Director, Operations'). Adjust the 'leadership team' wording to match. Your LinkedIn already credits the BRW Fast Starters 1st place and BRW Fast 100 awards to you - keep that wording consistent.", False),
- ("2. Deloitte Technology Fast 50: exact year/rank not verifiable in public sources. The one-pager only says 'recognised in' (no rank). If you have the certificate/year I'll make it specific; otherwise consider removing it to stay fully proof-honest.", False),
+ ("1. Your exact role/title at Time Telecom and Smart Business Telecom (public records list 'Senior Director, Operations' then 'Senior Director, Marketing'). Adjust the 'founding team / leadership team' wording to match. Your LinkedIn credits the BRW awards to you - keep wording consistent.", False),
+ ("2. Deloitte Technology Fast 50: now specific and sourced - Smart Business Telecom, 2015, 47th, 120% growth (Deloitte Australia winners list). Confirm before publishing.", False),
  ("3. Award logos: your launch checklist flags confirming whether BRW / Deloitte / M2 logos can be used. Get sign-off before adding logos to a client-facing version.", False),
 ]
-# measure box height
 wrapped = []
 for txt, b in note_lines:
-    wls = wrap(txt, 9, CW - 24, b)
-    wrapped.append((wls, b))
+    wrapped.append((wrap(txt, 9, CW - 24, b), b))
 nh = 16 + sum(len(w) * 12 for w, _ in wrapped) + 6
 p2.rect(ML, y - nh, CW, nh, NOTEBG)
-p2.col(NOTEBD, False)
-p2.ops.append(f"0.8 w {ML:.2f} {y-nh:.2f} {CW:.2f} {nh:.2f} re S")
+p2.col(NOTEBD, False); p2.ops.append(f"0.8 w {ML:.2f} {y-nh:.2f} {CW:.2f} {nh:.2f} re S")
 ny = y - 16
 for wls, b in wrapped:
     for ln in wls:
         p2.text(ML + 12, ny, ln, 9, (0.353, 0.290, 0.165), b)
         ny -= 12
-    ny -= 0
 
-# ---------------- Assemble PDF ----------------
+# ---------------- Assemble ----------------
 def pdf(pages):
-    objs = []
-    def add(b):
-        objs.append(b); return len(objs)
-    # placeholders to keep numbering: 1 catalog,2 pages,3 font,4 fontb, then per page: page obj + content
-    cat = 1; pages_obj = 2; f1 = 3; f2 = 4
-    page_ids = []; content_ids = []
+    cat, pages_obj, f1, f2 = 1, 2, 3, 4
     nid = 5
+    page_ids, content_ids = [], []
     for _ in pages:
         page_ids.append(nid); content_ids.append(nid + 1); nid += 2
-    out = []
-    out.append(b"%PDF-1.4\n%\xe2\xe3\xcf\xd3\n")
+    buf = bytearray(b"%PDF-1.4\n%\xe2\xe3\xcf\xd3\n")
     offsets = {}
-    buf = bytearray(out[0])
     def emit(num, body):
         offsets[num] = len(buf)
         buf.extend(f"{num} 0 obj\n".encode()); buf.extend(body); buf.extend(b"\nendobj\n")
@@ -280,7 +265,6 @@ def pdf(pages):
     buf.extend(f"trailer\n<< /Size {n+1} /Root {cat} 0 R >>\nstartxref\n{xref_pos}\n%%EOF".encode())
     return bytes(buf)
 
-data = pdf([p1, p2])
 with open("Narayan_Rathi_Credibility_Bio.pdf", "wb") as fh:
-    fh.write(data)
-print("wrote Narayan_Rathi_Credibility_Bio.pdf", len(data), "bytes")
+    fh.write(pdf([p1, p2]))
+print("wrote Narayan_Rathi_Credibility_Bio.pdf")

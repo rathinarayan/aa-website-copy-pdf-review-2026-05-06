@@ -104,8 +104,8 @@ y -= 13
 p1.line(ML, y, ML + CW, 2, ORANGE)
 y -= 18
 
-lead = ("Before founding Automate Accelerator, Narayan spent a decade building one of Australia's "
-        "fastest-growing telecommunications groups. Time Telecom was ranked No. 1 on the 2012 BRW "
+lead = ("Before founding Automate Accelerator, Narayan co-founded and built two of Australia's "
+        "fastest-growing telecommunications businesses. Time Telecom was ranked No. 1 on the 2012 BRW "
         "Fast 100 and acquired by ASX-listed M2 Group; its successor, Smart Business Telecom, kept the "
         "run going with back-to-back BRW Fast Starters and Deloitte Technology Fast 50 placings.")
 y = p1.para(ML, y, lead, 10.5, DARK, CW, 15)
@@ -165,13 +165,13 @@ def section(p, y, title, body):
     return y - 9
 
 y = section(p1, y, "The story",
-    "Time Telecom was a Melbourne-based provider serving ~30,000 small-business and residential "
-    "customers Australia-wide. Disciplined growth - 375.21% over three years to $51.13 million in "
-    "revenue - took it to the top of the 2012 BRW Fast 100 (the AFR / BRW ranking of the country's "
-    "fastest-growing established companies). In 2012 it was acquired by M2 Telecommunications Group "
-    "(ASX: MTU) via subsidiary Southern Cross Telco for a reported A$18.5 million. The founding team "
-    "then built Smart Business Telecom, doubling revenue from ~$22M to ~$48M in three years and earning "
-    "fresh BRW Fast Starters and Deloitte Technology Fast 50 recognition.")
+    "Co-founded by Narayan, Time Telecom was a Melbourne-based provider serving ~30,000 small-business "
+    "and residential customers Australia-wide. Disciplined growth - 375.21% over three years to $51.13 "
+    "million in revenue - took it to the top of the 2012 BRW Fast 100 (the AFR / BRW ranking of the "
+    "country's fastest-growing established companies). In 2012 it was acquired by M2 Telecommunications "
+    "Group (ASX: MTU) via subsidiary Southern Cross Telco for a reported A$18.5 million. Narayan and his "
+    "co-founders then built Smart Business Telecom, doubling revenue from ~$22M to ~$48M in three years "
+    "and earning fresh BRW Fast Starters and Deloitte Technology Fast 50 recognition.")
 
 y = section(p1, y, "What he does today",
     "Narayan is co-founder and CEO of Automate Accelerator, an Australian-owned B2B growth partner that "
@@ -217,7 +217,7 @@ for title, desc in sources:
 
 note_lines = [
  ("Verification notes - please confirm before sending:", True),
- ("1. Your exact role/title at Time Telecom and Smart Business Telecom (public records list 'Senior Director, Operations' then 'Senior Director, Marketing'). Adjust the 'founding team / leadership team' wording to match. Your LinkedIn credits the BRW awards to you - keep wording consistent.", False),
+ ("1. Role: per your confirmation the bio describes you as co-founder/owner of both Time Telecom and Smart Business Telecom. (Public LinkedIn currently shows 'Senior Director, Operations' then 'Senior Director, Marketing' - consider aligning your LinkedIn so it matches the co-founder framing before a client cross-checks it.)", False),
  ("2. Deloitte Technology Fast 50: now specific and sourced - Smart Business Telecom, 2015, 47th, 120% growth (Deloitte Australia winners list). Confirm before publishing.", False),
  ("3. Award logos: your launch checklist flags confirming whether BRW / Deloitte / M2 logos can be used. Get sign-off before adding logos to a client-facing version.", False),
 ]

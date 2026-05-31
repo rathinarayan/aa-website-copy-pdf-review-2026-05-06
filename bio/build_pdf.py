@@ -184,13 +184,16 @@ y -= 12
 p2.line(ML, y, ML + CW, 2, ORANGE)
 y -= 18
 y = p2.para(ML, y,
-    "I could not embed live screenshots from this environment (outbound image downloads are blocked here), "
-    "so below are the primary links. Open each, screenshot the highlighted figure, and place the image beside "
-    "the matching claim in the one-pager.", 9.5, DARK, CW, 14)
+    "Note: the BRW Fast 100 / Fast Starters lists credit the COMPANY (Time Telecom, later Smart Business "
+    "Telecom), not individuals - there is no standalone BRW article naming Narayan personally. The mention "
+    "that names you directly is your own LinkedIn 'Honors & awards' section (first row below). Outbound image "
+    "downloads are blocked in this environment, so below are the source links; open each, screenshot the "
+    "highlighted item and place it beside the matching claim.", 9.5, DARK, CW, 14)
 y -= 8
 
 sources = [
- ("BRW Fast 100 2012 - No. 1", "Time Telecom first place: $51.13M revenue, 375.21% growth (3 yrs to 2011-12). AFR / BRW Fast 100 2012 archives; franchisebusiness.com.au coverage."),
+ ("Narayan Rathi - LinkedIn 'Honors & awards' (NAMES YOU)", "Lists 'BRW Fast Starters - 1st place' and 'BRW Fast 100'. This is the artifact that credits you personally - screenshot this section.  linkedin.com/in/narayanrathi"),
+ ("BRW Fast 100 2012 - No. 1 (company)", "BRW lists credit the company, not individuals: Time Telecom first place, $51.13M revenue, 375.21% growth (3 yrs to 2011-12). AFR / BRW Fast 100 2012 archives; franchisebusiness.com.au coverage."),
  ("M2 acquisition of Time Telecom", "The Register, 28 Feb 2012 - 'M2 Telecoms buys some Time' (Southern Cross Telco; ~A$18.5M; ~30,000 customers).  theregister.com/2012/02/28/m2_buys_time/"),
  ("M2 Group (ASX: MTU)", "Company background, acquisitions and 2016 Vocus merger.  en.wikipedia.org/wiki/M2_Group"),
  ("Deloitte Technology Fast 50 Australia", "Program overview - CONFIRM exact year & rank before publishing a specific placement.  deloitte.com/au/en/Industries/tmt/about/technology-fast-50.html"),
@@ -208,7 +211,7 @@ for title, desc in sources:
 # note box
 note_lines = [
  ("Verification notes - please confirm before sending:", True),
- ("1. Your exact role/title at Time Telecom (public records list 'Senior Director, Operations'). Adjust the 'leadership team' wording to match.", False),
+ ("1. Your exact role/title at Time Telecom (public records list 'Senior Director, Operations'). Adjust the 'leadership team' wording to match. Your LinkedIn already credits the BRW Fast Starters 1st place and BRW Fast 100 awards to you - keep that wording consistent.", False),
  ("2. Deloitte Technology Fast 50: exact year/rank not verifiable in public sources. The one-pager only says 'recognised in' (no rank). If you have the certificate/year I'll make it specific; otherwise consider removing it to stay fully proof-honest.", False),
  ("3. Award logos: your launch checklist flags confirming whether BRW / Deloitte / M2 logos can be used. Get sign-off before adding logos to a client-facing version.", False),
 ]
